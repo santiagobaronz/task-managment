@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Managment</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="dist/flexboxgrid.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+</head>
+<body>
+    <main>
+        <section class="date">
+            <div class="date-info">
+                <h2 id="date"></h2>
+                <button></button>
+            </div>
+        </section>
+        <section class="main-section">
+            <div class="calendar" id="calendar">
+            </div>
+            <div class="tasks">
+                <div class="event-card">
+                    <div class="type">
+                        <p>DESARROLLO</p>
+                    </div>
+                    <div class="event-content">
+                        <img src="assets/menu-card.png" class="menu-card">
+                        <h3>New Web UI Design Projet</h3>
+                        <p>Website UI Design for $500</p>
+                    </div>
+                    <div class="event-info">
+                        <div class="time">10 - 11 AM</div>
+                        <div class="status">Pending</div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="type">
+                        <p>DESARROLLO</p>
+                    </div>
+                    <div class="event-content">
+                        <h3>New Web UI Design Projet</h3>
+                        <p>Website UI Design for $500</p>
+                    </div>
+                    <div class="event-info">
+                        <div class="time">10 - 11 AM</div>
+                        <div class="status">Pending</div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="form-add-task">
+                <form id="form">
+                    <input type="text" autocomplete="off" placeholder="Nombre de la tarea" id="task-name" name="task-name">
+                    <div class="date-div">
+                        <label for="datepicker" class="label-form">FECHA</label>
+                        <input id="datepicker" autocomplete="off" class="task-date" class="task-date" placeholder="Dia de la tarea" name="datepicker">
+                        <img src="assets/icon-calendar.svg" class="icon-calendar">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="task-time">
+                                <label for="task-start-time"" class="label-form">INICIO</label>
+                                <input  name="task-start-time" id="task-start-time" class="timepicker">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="task-time">
+                                <label for="task-finish-time" class="label-form">FINALIZACIÓN</label>
+                                <input  name="task-finish-time" id="task-finish-time" class="timepicker">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-info">
+                        <label for="task-info" class="label-form">DESCRIPCIÓN</label>
+                        <input type="text" autocomplete="off" id="task-info" placeholder="Describe tu tarea" name="task-info">
+                    </div>
+
+                    <label for="" class="label-form">CATEGORIA</label>
+                    <div class="task-category">
+                        <div class="develop" id="develop-div">
+                            <input type="radio" name="category" id="develop-input" value="DESARROLLO">
+                            <label for="develop-input">DESARROLLO</label>
+                        </div>
+                        <div class="university" id="university-div">
+                            <input type="radio" name="category" id="university-input" value="UNIVERSIDAD">
+                            <label for="university-input">UNIVERSIDAD</label>
+                        </div>
+                        <div class="home" id="home-div">
+                            <input type="radio" name="category" id="home-input" value="HOGAR">
+                            <label for="home-input">HOGAR</label>
+                        </div>
+                    </div>
+                    <p id="error"></p>
+                    <button class="button-add-task">Crear nueva tarea</button>
+                </form>
+            </div>
+
+            <div class="footer">
+                <p>Hecho por Santiago Baron</p>
+                <a href=""><img src="assets/433-github.svg" alt="" class="github-img"></a>
+            </div>
+        </section>
+    </main>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
