@@ -54,10 +54,11 @@ body{
     font-weight: 600;
 }
 
-
+.sectionSide{
+    float: right;
+}
 
 .date-info button{
-    float: right;
     width: 35px;
     height: 35px;
     border-radius: 50%;
@@ -184,7 +185,7 @@ body{
 .time::before{
     margin-right: 6px;
     display: inline-block;
-    content: url(../assets/time-01.svg);
+    content: url(../assets/icon-time.svg);
     width: 20px;
     height: 20px;
     transform: translateY(5px);

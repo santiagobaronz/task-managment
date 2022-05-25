@@ -27,9 +27,11 @@ const maxDaysPerMonth = {
     8: "Septiembre", 9: "Octubre", 10: "Noviembre", 11: "Diciembre"
 }
 
-dateTitle.innerHTML =   months[date.getMonth()]+ ", " + 
+const dateComplete =    months[date.getMonth()]+ ", " + 
                         days[date.getDay()] + " " + 
                         date.getDate();
+
+dateTitle.innerHTML = dateComplete;
 
 // Calendar
 
@@ -86,6 +88,39 @@ const changeDayInformation = function () {
 
 daysArray.forEach(days => { days.addEventListener("click", changeDayInformation)});
 
+// Change display
+
+const changeButton = document.getElementById("create-task");
+const tasks = document.getElementById("tasks");
+const formAddTask = document.getElementById("form-add-tasks");
+
+changeButton.addEventListener("click", () => {
+
+    if(dateTitle.classList.contains("sectionSide")){
+        changeButton.classList.add("sectionSide")
+        dateTitle.classList.remove("sectionSide")
+
+        calendar.style.display = "flex";
+        tasks.style.display = "block";
+        formAddTask.style.display = "none";
+        dateTitle.innerHTML = dateComplete;
+        changeButton.style.backgroundImage = "url(assets/add.svg)"
+
+    }else{
+
+        changeButton.classList.remove("sectionSide")
+        dateTitle.classList.add("sectionSide")
+
+        calendar.style.display = "none";
+        tasks.style.display = "none";
+        formAddTask.style.display = "block";
+        dateTitle.innerHTML = "Crear nueva tarea";
+        changeButton.style.backgroundImage = "url(assets/back.svg)"
+
+    }
+
+},false)
+
 // Creating a new task
 
 const developDiv = document.getElementById("develop-div");
@@ -112,10 +147,18 @@ homeDiv.addEventListener("click", () => {
     homeDiv.classList.add("home-selected");
 },false);
 
+if(localStorage.getItem("tasks")){
+    const taskArray = JSON.parse(localStorage.getItem('tasks'))
+    localStorage.setItem('tasks', JSON.stringify(taskArray));
+}else{
+    const taskArray = []
+    localStorage.setItem('tasks', JSON.stringify(taskArray));
+}
 
-var taskArray = [];
 
 function SaveTask(task){
+    var taskArray = [];
+    taskArray = JSON.parse(localStorage.getItem('tasks'));
     taskArray.push(task);
     localStorage.setItem('tasks', JSON.stringify(taskArray));
 }
@@ -142,6 +185,9 @@ form.addEventListener("submit", (e) => {
 
     }else{
 
+        error.classList.remove("error");
+        error.innerHTML = "";
+
         class Task {
             constructor(name, date, stime, ftime, category, comment = "") {
                 this.comment = comment;
@@ -159,10 +205,21 @@ form.addEventListener("submit", (e) => {
 
     }
 
-    console.log(taskArray)
-
 },false)
 
+// Retrive tasks
+
+function RetriveTasks(){
+    var dataRetrived = JSON.parse(localStorage.getItem('tasks'));
+    var dataRows = Object.keys(dataRetrived).length
+
+    console.log(dataRows);
+
+    for (let j = 0; j < dataRows; j++) {
+        console.log(dataRetrived[j].name)
+    }
+
+}
 
 
 $(function () {
