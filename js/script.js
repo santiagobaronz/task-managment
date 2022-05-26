@@ -32,7 +32,6 @@ const dateComplete =    months[date.getMonth()]+ ", " +
                         date.getDate();
 
 dateTitle.innerHTML = dateComplete;
-
 // Calendar
 
 function GetDaysLeft(year, month){
@@ -44,6 +43,12 @@ const currentDay = date.getDate();
 const currentYear = date.getFullYear();
 const month = date.getMonth() + 1;
 const daysLeft = GetDaysLeft(currentYear,month);
+
+$('#datepicker').datepicker({
+    dateFormat: "yy-mm-dd",
+    minDate: 0
+});
+
 
 const calendar = document.getElementById("calendar")
 
@@ -95,6 +100,10 @@ const tasks = document.getElementById("tasks");
 const formAddTask = document.getElementById("form-add-tasks");
 
 changeButton.addEventListener("click", () => {
+    changeDisplay()
+},false)
+
+function changeDisplay(){
 
     if(dateTitle.classList.contains("sectionSide")){
         changeButton.classList.add("sectionSide")
@@ -119,7 +128,19 @@ changeButton.addEventListener("click", () => {
 
     }
 
-},false)
+    updateDisplay();
+
+}
+
+function updateDisplay(){
+
+    var updatedTasks = [];
+    updatedTasks = JSON.parse(localStorage.getItem('tasks'));
+    console.log(updatedTasks);
+
+    
+
+}
 
 // Creating a new task
 
@@ -161,6 +182,7 @@ function SaveTask(task){
     taskArray = JSON.parse(localStorage.getItem('tasks'));
     taskArray.push(task);
     localStorage.setItem('tasks', JSON.stringify(taskArray));
+    changeDisplay()
 }
 
 
@@ -199,7 +221,7 @@ form.addEventListener("submit", (e) => {
             }
         }
 
-        var newTask = new Task(taskName,taskDate,taskStartTime,taskFinishTime,taskInfo,taskCategory);
+        var newTask = new Task(taskName,taskDate,taskStartTime,taskFinishTime,taskCategory,taskInfo);
 
         SaveTask(newTask);
 
@@ -220,6 +242,9 @@ function RetriveTasks(){
     }
 
 }
+
+
+// Arreglar problema con el Jquery
 
 
 $(function () {
