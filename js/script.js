@@ -142,54 +142,76 @@ function updateDisplay(){
 
     tasks.innerHTML = ""
 
+    var tasksArray = []
+
     updatedTasks.forEach(element => {
 
         let elementDate = element.date;
         let  elementDay = elementDate.split('-');
 
         if(elementDay[2] == dayButtonSelected){
-
-            let div = document.createElement("div");
-            console.log(element);
-
-            var divTextColor = "";
-            var divMarginColor = "";
-
-            if(element.category == "DESARROLLO"){
-                divTextColor = "type-development";
-                divMarginColor = "event-development";
-            }else if(element.category == "UNIVERSIDAD"){
-                divTextColor = "type-university";
-                divMarginColor = "event-university";
-            }else{
-                divTextColor = "type-home";
-                divMarginColor = "event-home";
-            }
-
-
-
-            div.innerHTML = `
-            
-            <div class="event-card">
-                    <div class="type ${divTextColor}">
-                        <p>${element.category}</p>
-                    </div>
-                    <div class="event-content ${divMarginColor}">
-                        <img src="assets/menu-card.png" class="menu-card">
-                        <h3>${element.name}</h3>
-                        <p>${element.comment}</p>
-                    </div>
-                    <div class="event-info">
-                        <div class="time">${element.startTime} - ${element.finishTime}</div>
-                        <div class="status">Activo</div>
-                    </div>
-                </div>
-            
-            `;
-
-            tasks.appendChild(div)
+            tasksArray.push(element);
         }
+
     });
+
+    if(tasksArray.length >= 1){
+
+        tasksArray.forEach(element => {
+
+        let div = document.createElement("div");
+        console.log(element);
+
+        var divTextColor = "";
+        var divMarginColor = "";
+
+        if(element.category == "DESARROLLO"){
+            divTextColor = "type-development";
+            divMarginColor = "event-development";
+        }else if(element.category == "UNIVERSIDAD"){
+            divTextColor = "type-university";
+            divMarginColor = "event-university";
+        }else{
+            divTextColor = "type-home";
+            divMarginColor = "event-home";
+        }
+
+
+
+        div.innerHTML = `
+        
+        <div class="event-card">
+                <div class="type ${divTextColor}">
+                    <p>${element.category}</p>
+                </div>
+                <div class="event-content ${divMarginColor}">
+                    <img src="assets/menu-card.png" class="menu-card">
+                    <h3>${element.name}</h3>
+                    <p>${element.comment}</p>
+                </div>
+                <div class="event-info">
+                    <div class="time">${element.startTime} - ${element.finishTime}</div>
+                    <div class="status">Activo</div>
+                </div>
+            </div>
+        
+        `;
+
+        tasks.appendChild(div)
+            
+        });
+
+    }else{
+
+        tasks.innerHTML = ` <p style="text-align: center; margin: 30px;">
+                                No hay tareas para este día, oprime el botón para crear una nueva
+                            </p>
+                            <button onclick="changeDisplay()" id="new-task-secondary" style="width: 100px; display: block; margin: auto; background: var(--blue-main-bg-color); padding: 20px;border-radius: 25px;cursor: pointer;">
+                                <img src="assets/add.svg">
+                            </button>
+                            `
+
+    }
     
 
 }
