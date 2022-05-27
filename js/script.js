@@ -297,6 +297,7 @@ form.addEventListener("submit", (e) => {
 
         var newTask = new Task(taskName,taskDate,taskStartTime,taskFinishTime,taskCategory,taskInfo);
 
+        form.reset();
         SaveTask(newTask);
 
     }
