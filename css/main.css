@@ -297,7 +297,7 @@ body{
     bottom: 30px;
 }
 
-.timepicker{
+.timepicker , .timepicker2{
     width: 80%;
     padding: 10px 10px 10px 0;
     background-color: transparent;

@@ -322,17 +322,59 @@ $(function () {
     $("#datepicker").datepicker();
     });
 
-    $('.timepicker').timepicker({
-        timeFormat: 'h:mm p',
-        interval: 30,
-        minTime: '00:00am',
-        maxTime: '11:30pm',
-        defaultTime: '13',
-        startTime: '0',
-        dynamic: true,
-        dropdown: true,
-        scrollbar: true
-    });
+$('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    interval: 30,
+    minTime: '00:00am',
+    maxTime: '11:30pm',
+    defaultTime: '24',
+    startTime: '1',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+
+var inputStartTime = document.getElementById("task-start-time");
+var inputEndTime = document.getElementById("task-finish-time");
+var taskTimeDiv = document.getElementById("task-time-div");
+
+inputStartTime.addEventListener("mouseleave", function(){
+
+    var inputStartTime = document.getElementById("task-start-time");
+    var inputEndTime = document.getElementById("task-finish-time");
+
+    taskTimeDiv.removeChild(inputEndTime);
+
+    let input = document.createElement("input");
+    input.name = "task-finish-time";
+    input.id = "task-finish-time";
+    input.classList.add("timepicker2");
+    input.autocomplete = "false";
+
+    taskTimeDiv.appendChild(input);
+
+    setTimeout(() => {
+        inputStartTime = document.getElementById("task-start-time");
+        console.log(inputStartTime.value)
+        var startNumber = 0
+        var startTime =inputStartTime.value
+        startNumber = startTime.split(':');
+        var secondNumber = startNumber[1].split(" ");
+
+        $('.timepicker2').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime:  startNumber + ":" + secondNumber[0]+""+secondNumber[1],
+            maxTime: '11:59 PM',
+            defaultTime: startNumber + ":" + secondNumber[0],
+            startTime: startNumber + ":" + secondNumber[0],
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    },)
+})
+
 
 
 // Once the page is loaded
