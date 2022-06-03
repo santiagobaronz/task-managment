@@ -160,7 +160,6 @@ function updateDisplay(){
         tasksArray.forEach(element => {
 
         let div = document.createElement("div");
-        console.log(element);
 
         var divTextColor = "";
         var divMarginColor = "";
@@ -304,19 +303,6 @@ form.addEventListener("submit", (e) => {
 
 },false)
 
-// Retrive tasks
-
-function RetriveTasks(){
-    var dataRetrived = JSON.parse(localStorage.getItem('tasks'));
-    var dataRows = Object.keys(dataRetrived).length
-
-    console.log(dataRows);
-
-    for (let j = 0; j < dataRows; j++) {
-        console.log(dataRetrived[j].name)
-    }
-
-}
 
 $(function () {
     $("#datepicker").datepicker();
@@ -355,7 +341,6 @@ inputStartTime.addEventListener("mouseleave", function(){
 
     setTimeout(() => {
         inputStartTime = document.getElementById("task-start-time");
-        console.log(inputStartTime.value)
         var startNumber = 0
         var startTime =inputStartTime.value
         startNumber = startTime.split(':');
@@ -375,8 +360,32 @@ inputStartTime.addEventListener("mouseleave", function(){
     },)
 })
 
+// Delete task of past days
 
+function deleteTaskPastDays(){
 
-// Once the page is loaded
+    var taskArray = [];
+    taskArray = JSON.parse(localStorage.getItem('tasks'));
+    var newTaskArray = []
 
-updateDisplay()
+    taskArray.forEach(task => {
+
+        var dateFullYear = date.getFullYear();
+        var dateFullMonth = parseInt(date.getMonth());
+        var dateFullDay = parseInt(date.getDate()-1);
+
+        const TodaysDate = new Date(dateFullYear,dateFullMonth,dateFullDay, 18, 0, 0);
+        var taskDate = new Date(task.date);
+
+        if(taskDate >= TodaysDate){
+            newTaskArray.push(task);
+        }
+
+        localStorage.setItem('tasks', JSON.stringify(newTaskArray));
+        updateDisplay();
+    });
+
+}
+
+deleteTaskPastDays();
+updateDisplay();
