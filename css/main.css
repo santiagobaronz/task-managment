@@ -378,3 +378,24 @@ body{
     border-radius: 10px;
     font-size: 13px;
 }
+
+.task-saved{
+    display: none;
+    width: 82%;
+    height: auto;
+    padding: 30px;
+    text-align: center;
+    overflow: hidden;
+    background-color: var(--gray-bg-color);
+    border-radius: 15px;
+    box-shadow: 1px 1px 25px rgb(219 219 219 / 80%);
+
+    position: absolute;
+    top: 80px;
+    z-index: 2;
+}
+
+.task-saved img{
+    width: 70%;
+    margin-bottom: 20px;
+}

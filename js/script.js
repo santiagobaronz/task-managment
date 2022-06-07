@@ -2,6 +2,13 @@
 
 // Date
 
+/**
+ * It returns the number of days left in the current month.
+ * @param year - 2020
+ * @param month - The current month
+ * @returns The number of days left in the current month.
+ */
+
 const dateTitle = document.querySelector("#date");
 const date = new Date();
 
@@ -32,7 +39,6 @@ const dateComplete =    months[date.getMonth()]+ ", " +
                         date.getDate();
 
 dateTitle.innerHTML = dateComplete;
-// Calendar
 
 function GetDaysLeft(year, month){
     const daysLeft = new Date(year, month, 0);
@@ -44,14 +50,10 @@ const currentYear = date.getFullYear();
 const month = date.getMonth() + 1;
 const daysLeft = GetDaysLeft(currentYear,month);
 
-$('#datepicker').datepicker({
-    dateFormat: "yy-mm-dd",
-    minDate: 0
-});
 
+/* Creating a div element for each day of the month and appending it to the calendar div. */
 
 const calendar = document.getElementById("calendar")
-
 var daysArray = []
  
 for (let i = currentDay; i <= daysLeft; i++) {
@@ -62,7 +64,6 @@ for (let i = currentDay; i <= daysLeft; i++) {
 
     let dayCalendar = new Date(currentYear, month - 1, i);
 
-
     div.innerHTML = `<p class='day-number'>${i}</p>
                     <p class='day-name'>${abbreviatedDays[dayCalendar.getDay()]}</p>`;
 
@@ -72,8 +73,11 @@ for (let i = currentDay; i <= daysLeft; i++) {
     daysArray.push(elementCalendar);
 }
 
-// Change color of day selected
 
+/**
+ * It removes the class "date-selected-color" from all the elements in the array "daysArray" except the
+ * one that was clicked, then adds the class "date-selected-color" to the element that was clicked.
+ */
 const changeDayInformation = function () {
 	let daySelected = this;
 
@@ -93,9 +97,40 @@ const changeDayInformation = function () {
 
 }
 
+/* The following code is adding an event listener to each day of the week. */
+
 daysArray.forEach(days => { days.addEventListener("click", changeDayInformation)});
 
-// Change display
+/* The following code is adding an event listener to each of the divs. When the div is clicked, the class
+is added to the div. This code works only to change some styles.*/
+
+const developDiv = document.getElementById("develop-div");
+const universityDiv = document.getElementById("university-div");
+const homeDiv = document.getElementById("home-div");
+
+const form = document.getElementById("form")
+
+developDiv.addEventListener("click", () => {
+    universityDiv.classList.remove("university-selected");
+    homeDiv.classList.remove("home-selected");
+    developDiv.classList.add("develop-selected");
+},false);
+
+universityDiv.addEventListener("click", () => {
+    developDiv.classList.remove("develop-selected");
+    homeDiv.classList.remove("home-selected");
+    universityDiv.classList.add("university-selected");
+},false);
+
+homeDiv.addEventListener("click", () => {
+    developDiv.classList.remove("develop-selected");
+    universityDiv.classList.remove("university-selected");
+    homeDiv.classList.add("home-selected");
+},false);
+
+
+/* Adding an event listener to the button with the id of "create-task" and when the button is clicked
+it will run the function changeDisplay() */
 
 const changeButton = document.getElementById("create-task");
 const tasks = document.getElementById("tasks");
@@ -104,6 +139,11 @@ const formAddTask = document.getElementById("form-add-tasks");
 changeButton.addEventListener("click", () => {
     changeDisplay()
 },false)
+
+
+/**
+ * The following code changes the styles of the button and top title when you change sections.
+ */
 
 function changeDisplay(){
 
@@ -133,6 +173,11 @@ function changeDisplay(){
     }
 
 }
+
+/**
+ * It takes the tasks from localStorage, filters them by the day selected, and then displays them in
+ * the HTML.
+**/
 
 function updateDisplay(){
 
@@ -209,37 +254,15 @@ function updateDisplay(){
                                 <img src="assets/add.svg">
                             </button>
                             `
-
     }
     
 
 }
 
-// Creating a new task
 
-const developDiv = document.getElementById("develop-div");
-const universityDiv = document.getElementById("university-div");
-const homeDiv = document.getElementById("home-div");
-
-const form = document.getElementById("form")
-
-developDiv.addEventListener("click", () => {
-    universityDiv.classList.remove("university-selected");
-    homeDiv.classList.remove("home-selected");
-    developDiv.classList.add("develop-selected");
-},false);
-
-universityDiv.addEventListener("click", () => {
-    developDiv.classList.remove("develop-selected");
-    homeDiv.classList.remove("home-selected");
-    universityDiv.classList.add("university-selected");
-},false);
-
-homeDiv.addEventListener("click", () => {
-    developDiv.classList.remove("develop-selected");
-    universityDiv.classList.remove("university-selected");
-    homeDiv.classList.add("home-selected");
-},false);
+/* Checking if there is a localStorage item called 'tasks'. If there is, it is parsing it into an array
+and then stringifying it and saving it back into localStorage. If there isn't, it is creating an
+empty array and saving it into localStorage. */
 
 if(localStorage.getItem("tasks")){
     const taskArray = JSON.parse(localStorage.getItem('tasks'))
@@ -249,15 +272,39 @@ if(localStorage.getItem("tasks")){
     localStorage.setItem('tasks', JSON.stringify(taskArray));
 }
 
+/**
+ * When the save button is clicked, the form is blurred and the task-saved div is displayed. After one
+ * second, the blur is removed and the task-saved div is hidden.
+ */
+
+function saveAnimation(){
+    const taskSavedDiv = document.getElementById("task-saved");
+    form.style.filter = "blur(1.5px)";
+    taskSavedDiv.style.display = "block";
+
+    setTimeout(() => {
+        form.style.filter = "blur(0)";
+        taskSavedDiv.style.display = "none";
+        changeDisplay()
+    },1500);
+}
+
+/**
+ * It takes a task object, parses the localStorage item 'tasks' into an array, pushes the task object
+ * into the array, and then stringifies the array and saves it back into localStorage.
+ * @param task - the task object
+ */
 
 function SaveTask(task){
     var taskArray = [];
     taskArray = JSON.parse(localStorage.getItem('tasks'));
     taskArray.push(task);
     localStorage.setItem('tasks', JSON.stringify(taskArray));
-    changeDisplay()
+    saveAnimation();
 }
 
+
+/* Creating a new task object and saving it to local storage. */
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -304,21 +351,7 @@ form.addEventListener("submit", (e) => {
 },false)
 
 
-$(function () {
-    $("#datepicker").datepicker();
-    });
-
-$('.timepicker').timepicker({
-    timeFormat: 'h:mm p',
-    interval: 30,
-    minTime: '00:00am',
-    maxTime: '11:30pm',
-    defaultTime: '24',
-    startTime: '1',
-    dynamic: false,
-    dropdown: true,
-    scrollbar: true
-});
+/** Code creates a new time div taking into account the start time */
 
 var inputStartTime = document.getElementById("task-start-time");
 var inputEndTime = document.getElementById("task-finish-time");
@@ -360,7 +393,10 @@ inputStartTime.addEventListener("mouseleave", function(){
     },)
 })
 
-// Delete task of past days
+
+/**
+ * It deletes tasks from the local storage that are older than today's date.
+ */
 
 function deleteTaskPastDays(){
 
@@ -386,6 +422,32 @@ function deleteTaskPastDays(){
     });
 
 }
+
+
+/* The above code is using the jQuery UI datepicker and timepicker plugins to create a datepicker and
+timepicker. */
+
+$(function () {
+    $("#datepicker").datepicker();
+    });
+
+$('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    interval: 30,
+    minTime: '00:00am',
+    maxTime: '11:30pm',
+    defaultTime: '24',
+    startTime: '1',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+
+$('#datepicker').datepicker({
+    dateFormat: "yy-mm-dd",
+    minDate: 0
+});
+
 
 deleteTaskPastDays();
 updateDisplay();
