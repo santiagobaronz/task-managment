@@ -1,6 +1,28 @@
 'use strict';
 
-// Date
+/* Checking if there is a localStorage item called 'tasks'. If there is, it is parsing it into an array
+and then stringifying it and saving it back into localStorage. If there isn't, it is creating an
+empty array and saving it into localStorage. */
+
+if(localStorage.getItem("tasks")){
+    const taskArray = JSON.parse(localStorage.getItem('tasks'))
+    localStorage.setItem('tasks', JSON.stringify(taskArray));
+}else{
+    const taskArray = []
+    localStorage.setItem('tasks', JSON.stringify(taskArray));
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * It returns the number of days left in the current month.
@@ -51,12 +73,51 @@ const month = date.getMonth() + 1;
 const daysLeft = GetDaysLeft(currentYear,month);
 
 
+
+
+
+
 /* Creating a div element for each day of the month and appending it to the calendar div. */
 
-const calendar = document.getElementById("calendar")
 var daysArray = []
- 
+
+var tasksDaysDesign = JSON.parse(localStorage.getItem('tasks'));
+const calendar = document.getElementById("calendar")
+
+
 for (let i = currentDay; i <= daysLeft; i++) {
+
+    let spansToFill = [];
+
+    for (let index = 0; index < tasksDaysDesign.length; index++) {
+        let date_task = new Date(tasksDaysDesign[index].date);
+        date_task = date_task.getDate() + 1;
+
+        if(i == date_task){
+            spansToFill.push(tasksDaysDesign[index].category);
+        }
+    }
+
+
+
+    function fillSpan(){
+
+        var returnItem = "";
+
+        if(spansToFill.includes("DESARROLLO")){
+            returnItem = returnItem + "<span class='span-type span-type-development'></span> \n";
+        }
+        if(spansToFill.includes("UNIVERSIDAD")){
+            returnItem = returnItem + "<span class='span-type span-type-university'></span> \n";
+        }
+        if(spansToFill.includes("HOGAR")){
+            returnItem = returnItem + "<span class='span-type span-type-home'></span> \n";
+        }
+
+        return returnItem;
+
+    }
+
 
     let div = document.createElement("div");
     i == currentDay ? div.className = "day-box date-selected date-selected-color" : div.className = "day-box no-selected";
@@ -65,13 +126,31 @@ for (let i = currentDay; i <= daysLeft; i++) {
     let dayCalendar = new Date(currentYear, month - 1, i);
 
     div.innerHTML = `<p class='day-number'>${i}</p>
-                    <p class='day-name'>${abbreviatedDays[dayCalendar.getDay()]}</p>`;
+                    <p class='day-name'>${abbreviatedDays[dayCalendar.getDay()]}</p>
+                    <div class='div-prueba'>
+                    ${fillSpan()}
+                    </div>`
+                    ;
 
     calendar.appendChild(div)
     
     var elementCalendar = document.getElementById(i);
     daysArray.push(elementCalendar);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
@@ -101,14 +180,35 @@ const changeDayInformation = function () {
 
 daysArray.forEach(days => { days.addEventListener("click", changeDayInformation)});
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* The following code is adding an event listener to each of the divs. When the div is clicked, the class
 is added to the div. This code works only to change some styles.*/
+
+const form = document.getElementById("form")
 
 const developDiv = document.getElementById("develop-div");
 const universityDiv = document.getElementById("university-div");
 const homeDiv = document.getElementById("home-div");
-
-const form = document.getElementById("form")
 
 developDiv.addEventListener("click", () => {
     universityDiv.classList.remove("university-selected");
@@ -129,6 +229,26 @@ homeDiv.addEventListener("click", () => {
 },false);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Adding an event listener to the button with the id of "create-task" and when the button is clicked
 it will run the function changeDisplay() */
 
@@ -139,6 +259,26 @@ const formAddTask = document.getElementById("form-add-tasks");
 changeButton.addEventListener("click", () => {
     changeDisplay()
 },false)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
@@ -173,6 +313,26 @@ function changeDisplay(){
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * It takes the tasks from localStorage, filters them by the day selected, and then displays them in
@@ -260,17 +420,24 @@ function updateDisplay(){
 }
 
 
-/* Checking if there is a localStorage item called 'tasks'. If there is, it is parsing it into an array
-and then stringifying it and saving it back into localStorage. If there isn't, it is creating an
-empty array and saving it into localStorage. */
 
-if(localStorage.getItem("tasks")){
-    const taskArray = JSON.parse(localStorage.getItem('tasks'))
-    localStorage.setItem('tasks', JSON.stringify(taskArray));
-}else{
-    const taskArray = []
-    localStorage.setItem('tasks', JSON.stringify(taskArray));
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * When the save button is clicked, the form is blurred and the task-saved div is displayed. After one
@@ -289,6 +456,35 @@ function saveAnimation(){
     },1500);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * It takes a task object, parses the localStorage item 'tasks' into an array, pushes the task object
  * into the array, and then stringifies the array and saves it back into localStorage.
@@ -302,6 +498,25 @@ function SaveTask(task){
     localStorage.setItem('tasks', JSON.stringify(taskArray));
     saveAnimation();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Creating a new task object and saving it to local storage. */
@@ -351,6 +566,29 @@ form.addEventListener("submit", (e) => {
 },false)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /** Code creates a new time div taking into account the start time */
 
 var inputStartTime = document.getElementById("task-start-time");
@@ -394,6 +632,34 @@ inputStartTime.addEventListener("mouseleave", function(){
 })
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * It deletes tasks from the local storage that are older than today's date.
  */
@@ -422,6 +688,28 @@ function deleteTaskPastDays(){
     });
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* The above code is using the jQuery UI datepicker and timepicker plugins to create a datepicker and
