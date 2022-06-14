@@ -98,8 +98,6 @@ for (let i = currentDay; i <= daysLeft; i++) {
         }
     }
 
-
-
     function fillSpan(){
 
         var returnItem = "";
