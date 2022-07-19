@@ -26,7 +26,7 @@ if(localStorage.getItem("tasks")){
 
 /**
  * It returns the number of days left in the current month.
- * @param year - 2020
+ * @param year - The current year
  * @param month - The current month
  * @returns The number of days left in the current month.
  */
@@ -345,7 +345,7 @@ function updateDisplay(){
 
     tasks.innerHTML = ""
 
-    var tasksArray = []
+    var tasksArray = [];
 
     updatedTasks.forEach(element => {
 
@@ -387,7 +387,7 @@ function updateDisplay(){
                     <p>${element.category}</p>
                 </div>
                 <div class="event-content ${divMarginColor}">
-                    <img src="assets/menu-card.png" class="menu-card">
+                    <img src="assets/menu-card.png" class="menu-card m-${dayButtonSelected}">
                     <h3>${element.name}</h3>
                     <p>${element.comment}</p>
                 </div>
@@ -451,6 +451,7 @@ function saveAnimation(){
         form.style.filter = "blur(0)";
         taskSavedDiv.style.display = "none";
         changeDisplay()
+        location.reload()
     },1500);
 }
 
