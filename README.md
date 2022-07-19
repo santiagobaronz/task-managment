@@ -2,19 +2,10 @@
 
 Application to organize daily tasks. Tasks from previous days can be saved and routines created for daily compliance.
 
-## Table of Contents 📋
-- General Info
-
-- Technologies
-
-- Installation
-
-- Authors
-
-- Social Media
-
 ## Preview project 📸
 
+![](https://raw.githubusercontent.com/santiagobaronz/task-managment/master/assets/sc1.JPG)
+![](https://raw.githubusercontent.com/santiagobaronz/task-managment/master/assets/sc2.JPG)
 
 ## Installation 💻💡
 
