@@ -1,4 +1,4 @@
-# 🧾 Task Managment
+# 🛠 Task Managment
 
 Application to organize daily tasks. Tasks from previous days can be saved and routines created for daily compliance.
 
